@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corazón Para Ti ❤️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: radial-gradient(ellipse at center, #1a1a2e 0%, #16213e 50%, #0f1419 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+            position: relative;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+            z-index: 10;
+        }
+
+        .heart-container {
+            position: relative;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .heart {
+            width: 280px;
+            height: 280px;
+            position: relative;
+            cursor: pointer;
+            animation: heartbeat 1.8s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            20% { transform: scale(1.1); }
+            40% { transform: scale(1); }
+            60% { transform: scale(1.05); }
+            80% { transform: scale(1); }
+        }
+
+        .heart svg {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 0 30px #ff1744) drop-shadow(0 0 60px #ff1744);
+        }
+
+        .heart-path {
+            fill: url(#heartGradient);
+            stroke: #ff1744;
+            stroke-width: 2;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            0% { 
+                fill: url(#heartGradient);
+                filter: drop-shadow(0 0 20px #ff1744);
+            }
+            100% { 
+                fill: url(#heartGradientBright);
+                filter: drop-shadow(0 0 40px #ff1744) drop-shadow(0 0 80px #ff4569);
+            }
+        }
+
+        .text {
+            font-size: 3rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #ff1744, #ff4569, #ff6b9d, #ff1744);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: textGlow 3s ease-in-out infinite, gradientMove 4s ease infinite;
+            text-shadow: 0 0 30px rgba(255, 23, 68, 0.5);
+            letter-spacing: 4px;
+            text-align: center;
+        }
+
+        @keyframes textGlow {
+            0%, 100% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-8px) scale(1.05); }
+        }
+
+        @keyframes gradientMove {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .sparkles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #ff1744;
+            border-radius: 50%;
+            animation: sparkle 2.5s linear infinite;
+            box-shadow: 0 0 10px #ff1744;
+        }
+
+        @keyframes sparkle {
+            0% {
+                transform: scale(0) rotate(0deg);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.5) rotate(180deg);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(0) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: #ff4569;
+            border-radius: 50%;
+            animation: particleFloat 8s linear infinite;
+            box-shadow: 0 0 6px #ff4569;
+        }
+
+        @keyframes particleFloat {
+            0% {
+                transform: translateY(100vh) translateX(0px) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) translateX(100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .pulse-rings {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+
+        .pulse-ring {
+            position: absolute;
+            border: 2px solid rgba(255, 23, 68, 0.3);
+            border-radius: 50%;
+            animation: pulseRing 3s ease-out infinite;
+        }
+
+        @keyframes pulseRing {
+            0% {
+                transform: scale(0.8);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(2.5);
+                opacity: 0;
+            }
+        }
+
+        .pulse-ring:nth-child(1) { animation-delay: 0s; }
+        .pulse-ring:nth-child(2) { animation-delay: 1s; }
+        .pulse-ring:nth-child(3) { animation-delay: 2s; }
+
+        /* Optimización para móvil */
+        @media (max-width: 480px) {
+            .heart {
+                width: 220px;
+                height: 220px;
+            }
+            
+            .text {
+                font-size: 2.2rem;
+                letter-spacing: 2px;
+            }
+            
+            .container {
+                gap: 30px;
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .heart {
+                width: 180px;
+                height: 180px;
+            }
+            
+            .text {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="heart-container">
+            <div class="heart">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="heartGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#ff1744;stop-opacity:1" />
+                            <stop offset="50%" style="stop-color:#ff4569;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#ff6b9d;stop-opacity:1" />
+                        </linearGradient>
+                        <linearGradient id="heartGradientBright" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#ff4569;stop-opacity:1" />
+                            <stop offset="50%" style="stop-color:#ff6b9d;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#ff8fab;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <path class="heart-path" d="M12,21.35l-1.45-1.32C5.4,15.36,2,12.28,2,8.5 C2,5.42,4.42,3,7.5,3c1.74,0,3.41,0.81,4.5,2.09C13.09,3.81,14.76,3,16.5,3 C19.58,3,22,5.42,22,8.5c0,3.78-3.4,6.86-8.55,11.54L12,21.35z"/>
+                </svg>
+            </div>
+            
+            <div class="pulse-rings">
+                <div class="pulse-ring" style="width: 300px; height: 300px;"></div>
+                <div class="pulse-ring" style="width: 300px; height: 300px;"></div>
+                <div class="pulse-ring" style="width: 300px; height: 300px;"></div>
+            </div>
+        </div>
+        
+        <div class="text">Para Ti</div>
+        
+        <div class="sparkles">
+            <div class="sparkle"></div>
+            <div class="sparkle"></div>
+            <div class="sparkle"></div>
+            <div class="sparkle"></div>
+            <div class="sparkle"></div>
+            <div class="sparkle"></div>
+        </div>
+    </div>
+
+    <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <script>
+        // Crear sparkles dinámicos alrededor del corazón
+        function createSparkle() {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            
+            // Posición alrededor del corazón
+            const angle = Math.random() * 2 * Math.PI;
+            const radius = 150 + Math.random() * 100;
+            const centerX = 50;
+            const centerY = 40;
+            
+            const x = centerX + Math.cos(angle) * (radius/3);
+            const y = centerY + Math.sin(angle) * (radius/3);
+            
+            sparkle.style.left = x + '%';
+            sparkle.style.top = y + '%';
+            sparkle.style.animationDelay = Math.random() * 2 + 's';
+            
+            document.querySelector('.sparkles').appendChild(sparkle);
+            
+            setTimeout(() => {
+                sparkle.remove();
+            }, 2500);
+        }
+
+        // Crear partículas flotantes
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 8 + 's';
+            particle.style.animationDuration = (6 + Math.random() * 4) + 's';
+            
+            document.querySelector('.particles').appendChild(particle);
+            
+            setTimeout(() => {
+                particle.remove();
+            }, 10000);
+        }
+
+        // Efecto de click más dramático
+        document.querySelector('.heart').addEventListener('click', function() {
+            this.style.animation = 'heartbeat 0.3s ease-in-out';
+            
+            // Crear explosión de sparkles
+            for(let i = 0; i < 10; i++) {
+                setTimeout(createSparkle, i * 50);
+            }
+            
+            setTimeout(() => {
+                this.style.animation = 'heartbeat 1.8s ease-in-out infinite';
+            }, 300);
+        });
+
+        // Efecto táctil para móvil
+        document.querySelector('.heart').addEventListener('touchstart', function(e) {
+            e.preventDefault();
+            this.click();
+        });
+
+        // Crear sparkles y partículas periódicamente
+        setInterval(createSparkle, 600);
+        setInterval(createParticle, 1200);
+
+        // Animación inicial
+        setTimeout(() => {
+            for(let i = 0; i < 5; i++) {
+                setTimeout(createSparkle, i * 100);
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
