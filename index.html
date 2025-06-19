@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Corazón Para Ti ❤️</title>
+    <title>Para Ti ❤️</title>
     <style>
         * {
             margin: 0;
@@ -12,349 +12,265 @@
         }
 
         body {
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
             min-height: 100vh;
-            background: radial-gradient(ellipse at center, #1a1a2e 0%, #16213e 50%, #0f1419 100%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            font-family: 'Arial', sans-serif;
-            position: relative;
-        }
-
-        .container {
             display: flex;
             flex-direction: column;
+            justify-content: center;
             align-items: center;
-            gap: 40px;
-            z-index: 10;
-        }
-
-        .heart-container {
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
             position: relative;
-            animation: float 3s ease-in-out infinite;
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
-        }
-
-        .heart {
-            width: 280px;
-            height: 280px;
-            position: relative;
-            cursor: pointer;
-            animation: heartbeat 1.8s ease-in-out infinite;
-        }
-
-        @keyframes heartbeat {
-            0%, 100% { transform: scale(1); }
-            20% { transform: scale(1.1); }
-            40% { transform: scale(1); }
-            60% { transform: scale(1.05); }
-            80% { transform: scale(1); }
-        }
-
-        .heart svg {
+        /* Estrellas de fondo */
+        .stars {
+            position: absolute;
             width: 100%;
             height: 100%;
-            filter: drop-shadow(0 0 30px #ff1744) drop-shadow(0 0 60px #ff1744);
+            z-index: 0;
         }
 
-        .heart-path {
-            fill: url(#heartGradient);
-            stroke: #ff1744;
-            stroke-width: 2;
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 2s infinite alternate;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+
+        /* Contenedor principal */
+        .container {
+            text-align: center;
+            z-index: 10;
+            position: relative;
+        }
+
+        /* Texto "Para ti" */
+        .message {
+            color: #ff6b9d;
+            font-size: clamp(2rem, 8vw, 4rem);
+            font-weight: bold;
+            margin-bottom: 2rem;
+            text-shadow: 0 0 20px rgba(255, 107, 157, 0.5);
             animation: glow 2s ease-in-out infinite alternate;
+            letter-spacing: 3px;
         }
 
         @keyframes glow {
-            0% { 
-                fill: url(#heartGradient);
-                filter: drop-shadow(0 0 20px #ff1744);
+            from { 
+                text-shadow: 0 0 20px rgba(255, 107, 157, 0.5);
+                transform: scale(1);
             }
-            100% { 
-                fill: url(#heartGradientBright);
-                filter: drop-shadow(0 0 40px #ff1744) drop-shadow(0 0 80px #ff4569);
+            to { 
+                text-shadow: 0 0 30px rgba(255, 107, 157, 0.8), 0 0 40px rgba(255, 107, 157, 0.6);
+                transform: scale(1.02);
             }
         }
 
-        .text {
-            font-size: 3rem;
-            font-weight: bold;
-            background: linear-gradient(45deg, #ff1744, #ff4569, #ff6b9d, #ff1744);
-            background-size: 300% 300%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: textGlow 3s ease-in-out infinite, gradientMove 4s ease infinite;
-            text-shadow: 0 0 30px rgba(255, 23, 68, 0.5);
-            letter-spacing: 4px;
-            text-align: center;
+        /* Corazón */
+        .heart {
+            width: clamp(150px, 30vw, 250px);
+            height: clamp(150px, 30vw, 250px);
+            position: relative;
+            margin: 0 auto;
+            animation: heartbeat 1.5s ease-in-out infinite;
+            filter: drop-shadow(0 0 20px rgba(255, 107, 157, 0.7));
         }
 
-        @keyframes textGlow {
-            0%, 100% { transform: translateY(0px) scale(1); }
-            50% { transform: translateY(-8px) scale(1.05); }
-        }
-
-        @keyframes gradientMove {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-
-        .sparkles {
+        .heart::before,
+        .heart::after {
+            content: '';
+            width: 52%;
+            height: 80%;
             position: absolute;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
+            left: 50%;
+            top: 0;
+            background: linear-gradient(45deg, #ff1744, #ff6b9d, #ff1744);
+            border-radius: 50px 50px 0 0;
+            transform: translate(-50%, 0) rotate(-45deg);
+            transform-origin: 0 100%;
         }
 
-        .sparkle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: #ff1744;
-            border-radius: 50%;
-            animation: sparkle 2.5s linear infinite;
-            box-shadow: 0 0 10px #ff1744;
+        .heart::after {
+            left: 0;
+            transform: translate(-50%, 0) rotate(45deg);
+            transform-origin: 100% 100%;
         }
 
-        @keyframes sparkle {
-            0% {
-                transform: scale(0) rotate(0deg);
-                opacity: 1;
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+                filter: drop-shadow(0 0 20px rgba(255, 107, 157, 0.7));
             }
             50% {
-                transform: scale(1.5) rotate(180deg);
-                opacity: 0.8;
-            }
-            100% {
-                transform: scale(0) rotate(360deg);
-                opacity: 0;
+                transform: scale(1.1);
+                filter: drop-shadow(0 0 30px rgba(255, 107, 157, 1));
             }
         }
 
+        /* Partículas flotantes */
         .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
+            position: absolute;
             width: 100%;
             height: 100%;
-            pointer-events: none;
             overflow: hidden;
+            z-index: 5;
         }
 
         .particle {
             position: absolute;
-            width: 3px;
-            height: 3px;
-            background: #ff4569;
+            width: 6px;
+            height: 6px;
+            background: rgba(255, 107, 157, 0.8);
             border-radius: 50%;
-            animation: particleFloat 8s linear infinite;
-            box-shadow: 0 0 6px #ff4569;
+            animation: float 6s infinite linear;
         }
 
-        @keyframes particleFloat {
+        @keyframes float {
             0% {
-                transform: translateY(100vh) translateX(0px) rotate(0deg);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
+                transform: translateY(100vh) rotate(0deg);
                 opacity: 1;
             }
             100% {
-                transform: translateY(-100px) translateX(100px) rotate(360deg);
+                transform: translateY(-100px) rotate(360deg);
                 opacity: 0;
             }
         }
 
-        .pulse-rings {
+        /* Pulsos de amor */
+        .love-pulse {
             position: absolute;
+            width: 100px;
+            height: 100px;
+            border: 2px solid rgba(255, 107, 157, 0.3);
+            border-radius: 50%;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            pointer-events: none;
+            animation: pulse 2s infinite;
         }
 
-        .pulse-ring {
-            position: absolute;
-            border: 2px solid rgba(255, 23, 68, 0.3);
-            border-radius: 50%;
-            animation: pulseRing 3s ease-out infinite;
+        .love-pulse:nth-child(2) {
+            animation-delay: 0.5s;
         }
 
-        @keyframes pulseRing {
+        .love-pulse:nth-child(3) {
+            animation-delay: 1s;
+        }
+
+        @keyframes pulse {
             0% {
-                transform: scale(0.8);
+                transform: translate(-50%, -50%) scale(0.5);
                 opacity: 1;
             }
             100% {
-                transform: scale(2.5);
+                transform: translate(-50%, -50%) scale(2);
                 opacity: 0;
             }
         }
 
-        .pulse-ring:nth-child(1) { animation-delay: 0s; }
-        .pulse-ring:nth-child(2) { animation-delay: 1s; }
-        .pulse-ring:nth-child(3) { animation-delay: 2s; }
-
-        /* Optimización para móvil */
+        /* Responsive */
         @media (max-width: 480px) {
-            .heart {
-                width: 220px;
-                height: 220px;
-            }
-            
-            .text {
-                font-size: 2.2rem;
+            .message {
+                margin-bottom: 1.5rem;
                 letter-spacing: 2px;
             }
             
-            .container {
-                gap: 30px;
+            body {
                 padding: 20px;
             }
         }
 
-        @media (max-width: 360px) {
-            .heart {
-                width: 180px;
-                height: 180px;
-            }
-            
-            .text {
-                font-size: 1.8rem;
-            }
+        /* Efecto hover para interactividad */
+        .heart:hover {
+            animation: heartbeat 0.8s ease-in-out infinite;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
+    <!-- Estrellas de fondo -->
+    <div class="stars" id="stars"></div>
+    
+    <!-- Partículas flotantes -->
+    <div class="particles" id="particles"></div>
+    
+    <!-- Contenido principal -->
     <div class="container">
-        <div class="heart-container">
-            <div class="heart">
-                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                        <linearGradient id="heartGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" style="stop-color:#ff1744;stop-opacity:1" />
-                            <stop offset="50%" style="stop-color:#ff4569;stop-opacity:1" />
-                            <stop offset="100%" style="stop-color:#ff6b9d;stop-opacity:1" />
-                        </linearGradient>
-                        <linearGradient id="heartGradientBright" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" style="stop-color:#ff4569;stop-opacity:1" />
-                            <stop offset="50%" style="stop-color:#ff6b9d;stop-opacity:1" />
-                            <stop offset="100%" style="stop-color:#ff8fab;stop-opacity:1" />
-                        </linearGradient>
-                    </defs>
-                    <path class="heart-path" d="M12,21.35l-1.45-1.32C5.4,15.36,2,12.28,2,8.5 C2,5.42,4.42,3,7.5,3c1.74,0,3.41,0.81,4.5,2.09C13.09,3.81,14.76,3,16.5,3 C19.58,3,22,5.42,22,8.5c0,3.78-3.4,6.86-8.55,11.54L12,21.35z"/>
-                </svg>
-            </div>
-            
-            <div class="pulse-rings">
-                <div class="pulse-ring" style="width: 300px; height: 300px;"></div>
-                <div class="pulse-ring" style="width: 300px; height: 300px;"></div>
-                <div class="pulse-ring" style="width: 300px; height: 300px;"></div>
-            </div>
+        <h1 class="message">Para Ti</h1>
+        <div class="heart">
+            <div class="love-pulse"></div>
+            <div class="love-pulse"></div>
+            <div class="love-pulse"></div>
         </div>
-        
-        <div class="text">Para Ti</div>
-        
-        <div class="sparkles">
-            <div class="sparkle"></div>
-            <div class="sparkle"></div>
-            <div class="sparkle"></div>
-            <div class="sparkle"></div>
-            <div class="sparkle"></div>
-            <div class="sparkle"></div>
-        </div>
-    </div>
-
-    <div class="particles">
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
     </div>
 
     <script>
-        // Crear sparkles dinámicos alrededor del corazón
-        function createSparkle() {
-            const sparkle = document.createElement('div');
-            sparkle.className = 'sparkle';
+        // Crear estrellas aleatorias
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const numStars = 50;
             
-            // Posición alrededor del corazón
-            const angle = Math.random() * 2 * Math.PI;
-            const radius = 150 + Math.random() * 100;
-            const centerX = 50;
-            const centerY = 40;
-            
-            const x = centerX + Math.cos(angle) * (radius/3);
-            const y = centerY + Math.sin(angle) * (radius/3);
-            
-            sparkle.style.left = x + '%';
-            sparkle.style.top = y + '%';
-            sparkle.style.animationDelay = Math.random() * 2 + 's';
-            
-            document.querySelector('.sparkles').appendChild(sparkle);
-            
-            setTimeout(() => {
-                sparkle.remove();
-            }, 2500);
+            for (let i = 0; i < numStars; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 2 + 's';
+                starsContainer.appendChild(star);
+            }
         }
 
         // Crear partículas flotantes
-        function createParticle() {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            particle.style.left = Math.random() * 100 + '%';
-            particle.style.animationDelay = Math.random() * 8 + 's';
-            particle.style.animationDuration = (6 + Math.random() * 4) + 's';
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
             
-            document.querySelector('.particles').appendChild(particle);
-            
-            setTimeout(() => {
-                particle.remove();
-            }, 10000);
+            setInterval(() => {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDuration = (Math.random() * 3 + 4) + 's';
+                particlesContainer.appendChild(particle);
+                
+                // Eliminar partícula después de la animación
+                setTimeout(() => {
+                    if (particle.parentNode) {
+                        particle.parentNode.removeChild(particle);
+                    }
+                }, 7000);
+            }, 300);
         }
 
-        // Efecto de click más dramático
+        // Efecto de click en el corazón
         document.querySelector('.heart').addEventListener('click', function() {
-            this.style.animation = 'heartbeat 0.3s ease-in-out';
-            
-            // Crear explosión de sparkles
-            for(let i = 0; i < 10; i++) {
-                setTimeout(createSparkle, i * 50);
-            }
-            
+            this.style.animation = 'none';
             setTimeout(() => {
-                this.style.animation = 'heartbeat 1.8s ease-in-out infinite';
-            }, 300);
+                this.style.animation = 'heartbeat 0.5s ease-in-out 3';
+                setTimeout(() => {
+                    this.style.animation = 'heartbeat 1.5s ease-in-out infinite';
+                }, 1500);
+            }, 10);
         });
 
-        // Efecto táctil para móvil
-        document.querySelector('.heart').addEventListener('touchstart', function(e) {
-            e.preventDefault();
-            this.click();
+        // Inicializar efectos
+        createStars();
+        createParticles();
+
+        // Efecto adicional al cargar la página
+        window.addEventListener('load', function() {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 1s ease-in';
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
         });
-
-        // Crear sparkles y partículas periódicamente
-        setInterval(createSparkle, 600);
-        setInterval(createParticle, 1200);
-
-        // Animación inicial
-        setTimeout(() => {
-            for(let i = 0; i < 5; i++) {
-                setTimeout(createSparkle, i * 100);
-            }
-        }, 1000);
     </script>
 </body>
 </html>
